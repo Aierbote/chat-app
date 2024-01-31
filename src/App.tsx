@@ -2,6 +2,9 @@ import { memo, useCallback, useEffect, useState } from "react";
 // import { MouseEvent, KeyboardEvent } from "react";
 import PropTypes from "prop-types";
 import "./App.css";
+import { utilityGetCachedEmail, utilityGetCachedUsers } from "./utility";
+import Login from "./components/Login";
+import ChatView from "./components/ChatView";
 
 interface Props {
 	children?: any;
@@ -28,8 +31,9 @@ const App: React.FC<Props> = memo((props: Props) => {
 					lastAccess: new Date().toISOString(),
 				},
 			};
-			setUsers(newUsers);
 			localStorage.setItem("users", JSON.stringify(newUsers));
+
+			setUsers(newUsers);
 		} else {
 			const newUsers = {
 				...users,
@@ -38,9 +42,9 @@ const App: React.FC<Props> = memo((props: Props) => {
 					lastAccess: new Date().toISOString(),
 				},
 			};
+			localStorage.setItem("users", JSON.stringify(newUsers));
 
 			setUsers(newUsers);
-			localStorage.setItem("users", JSON.stringify(newUsers));
 		}
 	}, [inputEmail, users]);
 
@@ -61,9 +65,8 @@ const App: React.FC<Props> = memo((props: Props) => {
 			console.log("didMount");
 
 			// Version 2.0
-			const cachedEmail: string | null = localStorage.getItem("email") || "";
-			const storedUsers: string = localStorage.getItem("users") || "";
-			const cachedUsers: Object = JSON.parse(storedUsers);
+			const cachedEmail: string | null = utilityGetCachedEmail();
+			const cachedUsers: Object = utilityGetCachedUsers;
 
 			setIsLogged(!!cachedEmail);
 
@@ -116,12 +119,13 @@ const App: React.FC<Props> = memo((props: Props) => {
 	return (
 		<section className="container-fluid d-flex flex-column justify-content-center align-content-center g-1 p-auto m-auto w-50 h-100">
 			{page}
+			{isLogged ? <ChatView author={inputEmail} /> : <></>}
 		</section>
 	);
 });
 
 App.propTypes = {
-	children: PropTypes.any,
+	children: PropTypes.node,
 };
 
 export default App;

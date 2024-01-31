@@ -11,7 +11,7 @@ interface TUsers {
 
 interface TMessage {
 	author: string;
-	message: string;
+	content: string;
 	date: Date;
 }
 
