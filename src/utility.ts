@@ -3,5 +3,5 @@ export const utilityGetCachedEmail = () => {
 };
 
 export const utilityGetCachedUsers = () => {
-	return JSON.parse(localStorage.getItem("users") || "");
+	return JSON.parse(localStorage.getItem("users") || "{}");
 };
