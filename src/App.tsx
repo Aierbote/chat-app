@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 // import { MouseEvent, KeyboardEvent } from "react";
 import PropTypes from "prop-types";
 import "./App.css";
@@ -119,7 +119,7 @@ const App: React.FC<Props> = memo((props: Props) => {
 	return (
 		<section className="container-fluid d-flex flex-column justify-content-center align-content-center g-1 p-auto m-auto w-50 h-100">
 			{page}
-			{isLogged ? <ChatView author={inputEmail} /> : <></>}
+			{isLogged ? <ChatView author={inputEmail} /> : null}
 		</section>
 	);
 });
